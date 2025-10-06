@@ -1,0 +1,3 @@
+{
+  "apiBaseUrl": "${BFF_BASE_URL}"
+}

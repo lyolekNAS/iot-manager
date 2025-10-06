@@ -1,0 +1,22 @@
+<div *ngIf="loading()">Завантаження...</div>
+
+<div *ngIf="error()" class="error">
+  {{ error() }}
+</div>
+
+<div *ngIf="userInfo() as info">
+  <h2>Інформація про користувача</h2>
+
+  <table>
+    <tr><th>Sub</th><td>{{ info.sub }}</td></tr>
+    <tr><th>User ID</th><td>{{ info.userId }}</td></tr>
+    <tr><th>Ім'я</th><td>{{ info.name }}</td></tr>
+    <tr><th>Прізвище</th><td>{{ info.surname }}</td></tr>
+    <tr><th>Email</th><td>{{ info.email }}</td></tr>
+  </table>
+
+  <h3>Ролі</h3>
+  <ul>
+    <li *ngFor="let role of info.roles">{{ role }}</li>
+  </ul>
+</div>
