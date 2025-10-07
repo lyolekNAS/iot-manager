@@ -11,9 +11,11 @@ RUN npm run build --prod
 # Етап 2: Nginx для продакшн-серву статичних файлів
 FROM nginx:1.27
 
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Видаляємо дефолтну сторінку
 RUN rm -rf /usr/share/nginx/html/*
-
 # Копіюємо зібраний Angular
 COPY --from=build /app/dist/iot-manager/browser /usr/share/nginx/html
 
