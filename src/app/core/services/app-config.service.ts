@@ -13,7 +13,7 @@ export class AppConfigService {
   constructor(private http: HttpClient) {}
 
   async loadConfig(): Promise<void> {
-    this.config = await firstValueFrom(this.http.get<AppConfig>('assets/config/config.json'));
+    this.config = await firstValueFrom(this.http.get<AppConfig>('assets/config.json'));
   }
 
   get apiBaseUrl(): string {
