@@ -10,5 +10,4 @@ import { NgIf } from '@angular/common';
   templateUrl: '/app.html'
 })
 export class App {
-  protected readonly title = signal('iot-manager');
 }
