@@ -1,4 +1,5 @@
 //src/app/app.config.ts
+import { LOCALE_ID } from '@angular/core';
 import { ApplicationConfig, APP_INITIALIZER, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, Provider } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -12,6 +13,7 @@ import { AuthInterceptorFn } from '@core/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: LOCALE_ID, useValue: 'uk-UA' },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
