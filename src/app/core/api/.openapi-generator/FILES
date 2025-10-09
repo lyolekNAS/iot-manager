@@ -9,10 +9,9 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
-model/device.ts
-model/deviceDto.ts
+model/deviceView.ts
 model/models.ts
-model/place.ts
+model/placeView.ts
 param.ts
 provide-api.ts
 variables.ts

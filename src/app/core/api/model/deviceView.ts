@@ -9,11 +9,9 @@
  */
 
 
-export interface DeviceDto { 
-    id?: number;
-    name?: string;
+export interface DeviceView { 
     lastUpdated?: string;
-    username?: string;
-    password?: string;
+    name?: string;
+    id?: number;
 }
 

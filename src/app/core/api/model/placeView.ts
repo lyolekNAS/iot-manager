@@ -7,15 +7,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Place } from './place';
+import { DeviceView } from './deviceView';
 
 
-export interface Device { 
-    id?: number;
+export interface PlaceView { 
+    devices?: Array<DeviceView>;
     name?: string;
-    lastUpdated?: string;
-    username?: string;
-    password?: string;
-    state?: Place;
+    id?: number;
 }
 
