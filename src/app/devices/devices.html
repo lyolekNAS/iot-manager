@@ -1,5 +1,3 @@
-<div>
-  <ul>
-    <li *ngFor="let d of devices()">{{ d.name }} (id={{ d.id }}) (username={{ d.username }})</li>
-  </ul>
+<div *ngFor="let d of devices()">
+  <a [routerLink]="['/device', d.id]">{{ d.name }}</a>
 </div>

@@ -1,12 +1,12 @@
 // src/app/app.ts
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterLink, RouterOutlet, NgOptimizedImage],
   templateUrl: '/app.html'
 })
 export class App {

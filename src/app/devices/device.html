@@ -1,0 +1,8 @@
+<div *ngIf="loading() == ''; else msg">
+  <div>{{device().name}}{{device().id}}</div>
+  <div>Востаннє онлайн: {{device().lastUpdated}}</div>
+</div>
+
+<ng-template #msg>
+  <p>{{ loading() }}</p>
+</ng-template>

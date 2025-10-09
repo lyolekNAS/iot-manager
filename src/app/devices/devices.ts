@@ -1,18 +1,17 @@
 //src/app/devices.ts
 import { Component, OnInit, signal } from '@angular/core';
 import { NgFor } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { DeviceService } from '@core/services/device.service';
 
 
 @Component({
   selector: 'app-devices',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, RouterLink],
   templateUrl: './devices.html'
 })
 export class DevicesComponent implements OnInit {
-  protected readonly title = signal('iot-manager');
   devices = signal<any[]>([]);
 
   constructor(
