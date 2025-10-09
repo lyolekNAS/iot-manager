@@ -2,7 +2,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { DeviceService } from '@core/services/device.service';
+import { DeviceControllerService } from '@core/api/api/deviceController.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class DeviceComponent implements OnInit {
   loading = signal('');
 
   constructor(
-    private deviceService: DeviceService,
+    private deviceService: DeviceControllerService,
     private route: ActivatedRoute
   ) {}
 
@@ -36,7 +36,14 @@ export class DeviceComponent implements OnInit {
 
   private loadDevice(id: string) {
     this.loading.set('Завантаження');
-    this.deviceService.getDevice(id).subscribe({
+
+    const numericId = Number(id);
+    if (isNaN(numericId)) {
+      this.loading.set(`Некоректний id: ${id}`);
+      return;
+    }
+
+    this.deviceService.getById(numericId).subscribe({
       next: (data) => {
         this.device.set(data);
         this.loading.set('');

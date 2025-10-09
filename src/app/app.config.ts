@@ -9,6 +9,7 @@ import { AppConfigService } from '@core/services/app-config.service';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthInterceptorFn } from '@core/auth.interceptor';
+import { Configuration } from './core/api'
 
 
 export const appConfig: ApplicationConfig = {
@@ -28,6 +29,14 @@ export const appConfig: ApplicationConfig = {
       useFactory: (configService: AppConfigService) => () => configService.loadConfig(),
       deps: [AppConfigService],
       multi: true
-    } as Provider
+    } as Provider,
+    {
+      provide: Configuration,
+      deps: [AppConfigService],
+      useFactory: (configService: AppConfigService) =>
+        new Configuration({
+          basePath: configService.apiBaseUrl, // ✅ динамічно з AppConfigService
+        }),
+    },
   ]
 };

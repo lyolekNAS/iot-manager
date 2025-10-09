@@ -1,3 +1,7 @@
-<div *ngFor="let d of devices()">
-  <a [routerLink]="['/device', d.id]">{{ d.name }}</a>
+<div *ngFor="let place of places()">
+  <div>{{ place.name }}</div>
+  <div *ngFor="let device of place.devices">
+    <a [routerLink]="['/device', device.id]">{{ device.name }}</a>
+  </div>
+  <hr/>
 </div>

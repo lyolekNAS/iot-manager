@@ -5,8 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "watch": "ng build --watch --configuration development --base-href /iot-manager/",
+    "test": "ng test",
+    "generate:api": "npx @openapitools/openapi-generator-cli generate -i https://sites.localhost.org/iot-back/v3/api-docs -g typescript-angular -o src/app/core/api"
   },
   "prettier": {
     "printWidth": 100,

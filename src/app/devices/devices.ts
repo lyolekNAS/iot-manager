@@ -2,7 +2,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { DeviceService } from '@core/services/device.service';
+import { PlaceControllerService } from '@core/api/api/placeController.service';
 
 
 @Component({
@@ -12,17 +12,17 @@ import { DeviceService } from '@core/services/device.service';
   templateUrl: './devices.html'
 })
 export class DevicesComponent implements OnInit {
-  devices = signal<any[]>([]);
+  places = signal<any[]>([]);
 
   constructor(
-    private deviceService: DeviceService
+    private placeService: PlaceControllerService
   ) {}
 
   ngOnInit() {
 
-    this.deviceService.getAll().subscribe((data: any[]) => {
-      this.devices.set(data);
-      console.log('Devices:', this.devices());
+    this.placeService.getAll().subscribe((data: any[]) => {
+      this.places.set(data);
+      console.log('Places:', this.places());
     });
   }
 }
