@@ -1,8 +1,12 @@
-<div *ngIf="loading() == ''; else msg">
-  <div>{{device().name}}{{device().id}}</div>
-  <div>Востаннє онлайн: {{device().lastUpdated}}</div>
-</div>
-
 <ng-template #msg>
-  <p>{{ loading() }}</p>
+  <div class="alert alert-info" role="alert">{{ loading() }}</div>
 </ng-template>
+
+<div *ngIf="loading() == ''; else msg">
+  <div class="list-group">
+    <h5 class="list-group-item list-group-item-dark mb-0 mt-3 rounded-top">
+      {{device().name}}
+    </h5>
+    <div class="list-group-item text-center">Востаннє онлайн: {{device().lastUpdated}}</div>
+  </div>
+</div>

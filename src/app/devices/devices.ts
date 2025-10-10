@@ -22,7 +22,7 @@ export class DevicesComponent implements OnInit {
   ngOnInit() {
     this.loading.set('Завантаження');
 
-    this.placeService.getAll().subscribe({
+    this.placeService.getAllByUser().subscribe({
       next: (data) => {
         console.log('Places:', this.places());
         this.places.set(data);
