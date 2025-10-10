@@ -1,5 +1,13 @@
-<div class="container">
-  <div><a routerLink="/menu"><img ngSrc="./assets/img/favicon.ico" alt="Home" width="40" height="40" /></a></div>
-  <hr/>
+<div class="container container-sm p-4 bg-white shadow-lg rounded-3 min-width-400 text-center">
+  <div>
+    <a routerLink="/menu">
+      <img ngSrc="./assets/img/favicon.png" alt="Home" width="40" height="40" priority/>
+    </a>
+  </div>
+  <hr class="my-3"/>
+  <div *ngIf="notificationService.accessDenied() as msg" class="alert alert-danger d-flex justify-content-between align-items-center mb-3">
+    {{ msg }}
+    <button type="button" class="btn-close" (click)="notificationService.clear()" aria-label="Ок"></button>
+  </div>
   <router-outlet></router-outlet>
 </div>

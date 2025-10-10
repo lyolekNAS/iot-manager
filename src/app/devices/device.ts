@@ -45,9 +45,9 @@ export class DeviceComponent implements OnInit {
 
     this.deviceService.getById(numericId).subscribe({
       next: (data) => {
+        console.log('Loaded device:', data);
         this.device.set(data);
         this.loading.set('');
-        console.log('Loaded device:', data);
       },
       error: (err) => {
         console.error('Error loading device', err);

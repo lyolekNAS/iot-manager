@@ -1,7 +1,21 @@
-<div *ngFor="let place of places()">
-  <div>{{ place.name }}</div>
-  <div *ngFor="let device of place.devices">
-    <a [routerLink]="['/device', device.id]">{{ device.name }}</a>
+<ng-template #msg>
+  <div class="alert alert-info" role="alert">{{ loading() }}</div>
+</ng-template>
+
+<div *ngIf="loading() == ''; else msg">
+  <div class="list-group">
+    <div *ngFor="let place of places()">
+      <h5 class="list-group-item list-group-item-dark mb-0 mt-3 rounded-top">
+        {{ place.name }}
+      </h5>
+      <div *ngFor="let device of place.devices" class="list-group-item text-center">
+        <a [routerLink]="['/device', device.id]" class="text-decoration-none text-primary">
+          {{ device.name }}
+        </a>
+      </div>
+      <div *ngIf="place.devices.length === 0" class="list-group-item list-group-item-light fst-italic">
+        Немає пристроїв у цьому місці.
+      </div>
+    </div>
   </div>
-  <hr/>
 </div>
