@@ -7,11 +7,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DeviceView } from './deviceView';
+import { DeviceShortView } from './deviceShortView';
 
 
 export interface PlaceView { 
-    devices?: Array<DeviceView>;
+    devices?: Array<DeviceShortView>;
     name?: string;
     id?: number;
 }

@@ -8,5 +8,17 @@
       {{device().name}}
     </h5>
     <div class="list-group-item text-center">Востаннє онлайн: {{device().lastUpdated}}</div>
+
+    <div *ngFor="let port of device().devicePorts" class="list-group-item text-center">
+      <div>
+        {{ port.name }}:
+        <span *ngIf="port.ioType == 'out'">
+          {{ port.value }}
+        </span>
+        <span *ngIf="port.ioType == 'in'">
+          <input type="text" [(ngModel)]="port.value" class="form-control d-inline-block w-auto text-center" (change)="updatePort(port)" />
+        </span>
+      </div>
+    </div>
   </div>
 </div>

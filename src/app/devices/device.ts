@@ -1,15 +1,17 @@
 //src/app/device.ts
 import { Component, OnInit, signal } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { DeviceControllerService } from '@core/api/api/deviceController.service';
+import { PortView } from '@core/api/model/portView';
 
 
 @Component({
   selector: 'app-device',
   standalone: true,
   templateUrl: './device.html',
-  imports: [NgIf]
+  imports: [NgIf, NgFor, FormsModule]
 })
 export class DeviceComponent implements OnInit {
   device = signal<any | null>([]);
@@ -53,6 +55,21 @@ export class DeviceComponent implements OnInit {
         console.error('Error loading device', err);
         this.loading.set(`Не вдалось завантажити: ${err.message} [${err.status}]`);
       }
+    });
+  }
+
+  updatePort(port: PortView) {
+    this.loading.set('Завантаження');
+
+    this.deviceService.updatePort(port.id!, port.value!).subscribe({
+      next: () => {
+        console.log(`${port.name} змінено`);
+        this.loading.set(``);
+      },
+      error: (err) => {
+        console.error(`❌ Не вдалось змінити ${port.name}:`, err);
+        this.loading.set(`Не вдалось оновити: ${err.message} [${err.status}]`);
+      },
     });
   }
 }

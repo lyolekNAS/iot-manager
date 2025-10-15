@@ -7,13 +7,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { PortView } from './portView';
 
 
-export interface DeviceView { 
-    lastUpdated?: string;
-    devicePorts?: Array<PortView>;
+export interface PortView { 
+    gpio?: string;
+    ioType?: string;
     name?: string;
+    value?: number;
     id?: number;
 }
 
