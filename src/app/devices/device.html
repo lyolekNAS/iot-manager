@@ -4,8 +4,14 @@
 
 <div *ngIf="loading() == ''; else msg">
   <div class="list-group">
-    <h5 class="list-group-item list-group-item-dark mb-0 mt-3 rounded-top">
-      {{device().name}}
+    <h5 class="list-group-item list-group-item-dark mb-0 mt-3 rounded-top d-flex justify-content-between align-items-center">
+
+      <span>{{device().name}}</span>
+
+      <button class="btn btn-sm btn-light"
+              (click)="refreshDevice()">
+        <i class="bi bi-arrow-clockwise"></i> Оновити
+      </button>
     </h5>
     <div class="list-group-item text-center">Востаннє онлайн: {{device().lastUpdated}}</div>
 

@@ -15,7 +15,8 @@ import { PortView } from '@core/api/model/portView';
 })
 export class DeviceComponent implements OnInit {
   device = signal<any | null>([]);
-  id = signal<string | null>(null);
+  id = signal<string>("");
+
   loading = signal('');
 
   constructor(
@@ -56,6 +57,10 @@ export class DeviceComponent implements OnInit {
         this.loading.set(`Не вдалось завантажити: ${err.message} [${err.status}]`);
       }
     });
+  }
+
+  refreshDevice(){
+    this.loadDevice(this.id());
   }
 
   updatePort(port: PortView) {
