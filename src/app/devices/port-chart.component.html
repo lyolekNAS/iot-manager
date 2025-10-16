@@ -1,0 +1,12 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <canvas
+      baseChart
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      type="line">
+    </canvas>
+
+    <div *ngIf="loading()" class="text-danger mt-2">{{ loading() }}</div>
+  </div>
+</div>

@@ -26,6 +26,7 @@
           <input type="text" [(ngModel)]="port.value" class="form-control d-inline-block w-auto text-center" (change)="updatePort(port)" />
         </span>
       </div>
+      <app-port-chart [portId]="port.id"></app-port-chart>
     </div>
   </div>
 </div>

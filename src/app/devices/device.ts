@@ -5,13 +5,15 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DeviceControllerService } from '@core/api/api/deviceController.service';
 import { PortView } from '@core/api/model/portView';
+import { PortChartComponent } from '@devices/port-chart.component';
+
 
 
 @Component({
   selector: 'app-device',
   standalone: true,
   templateUrl: './device.html',
-  imports: [NgIf, NgFor, FormsModule]
+  imports: [NgIf, NgFor, FormsModule, PortChartComponent]
 })
 export class DeviceComponent implements OnInit {
   device = signal<any | null>([]);

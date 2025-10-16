@@ -13,6 +13,7 @@ model/deviceShortView.ts
 model/deviceView.ts
 model/models.ts
 model/placeView.ts
+model/portHistoryView.ts
 model/portView.ts
 param.ts
 provide-api.ts
