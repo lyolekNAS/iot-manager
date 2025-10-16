@@ -9,8 +9,9 @@
       <span>{{device().name}}</span>
 
       <button class="btn btn-sm btn-light"
-              (click)="refreshDevice()">
-        <i class="bi bi-arrow-clockwise"></i> Оновити
+              (click)="refreshDevice()"
+              title="Оновити">
+        <i class="bi bi-arrow-clockwise"></i>
       </button>
     </h5>
     <div class="list-group-item text-center">Востаннє онлайн: {{device().lastUpdated}}</div>
