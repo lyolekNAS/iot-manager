@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { NgIf, NgClass } from '@angular/common';
-import { ChartConfiguration } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartDataset } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import 'chartjs-adapter-date-fns';
 import 'chart.js/auto';
 import { DeviceControllerService } from '@core/api/api/deviceController.service';
 
@@ -35,7 +36,7 @@ export class PortChartComponent implements OnInit {
 
 
 
-  public lineChartData: ChartConfiguration<'line'>['data'] = {
+  public lineChartData: ChartData<'line', { x: Date | null, y: number | null }[]> = {
     labels: [],
     datasets: [{
       data: [],
@@ -50,7 +51,15 @@ export class PortChartComponent implements OnInit {
   public lineChartOptions: ChartConfiguration<'line'>['options'] = {
     responsive: true,
     scales: {
-      x: { display: false },
+      x: {
+        type: 'time',
+        time: {
+          unit: 'hour',
+          displayFormats: {
+            minute: 'HH'
+          }
+        }
+      },
       y: { title: { display: true, text: 'Value' } }
     },
     plugins: {
@@ -91,11 +100,18 @@ export class PortChartComponent implements OnInit {
     }
     this.deviceService.getPortHistory(numericId, this.onDate).subscribe({
       next: (data) => {
-        this.lineChartData.labels = data.map(d => d.onTime ? new Date(d.onTime).toLocaleTimeString() : '—');
-        this.lineChartData.datasets[0].data = data.map(d => typeof d.value === 'number' ? d.value : null);
+//        this.lineChartData.labels = data.map(d => d.onTime ? new Date(d.onTime).toLocaleTimeString() : '—');
+//        this.lineChartData.datasets[0].data = data.map(d => typeof d.value === 'number' ? d.value : null);
+        this.lineChartData.datasets[0].data = data.map(d => ({
+          x: d.onTime ? new Date(d.onTime) : null,
+          y: typeof d.value === 'number' ? d.value : null
+        }));
+        this.lineChartData.labels = [];
         this.chart?.update();
-        this.infoMsg.set(``);
-        this.isLoading.set(false);
+        setTimeout(() => {
+          this.infoMsg.set('');
+          this.isLoading.set(false);
+        });
       },
       error: (err) => {
         console.error('Error loading device', err);
