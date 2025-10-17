@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal, computed } from '@angular/core';
+import { Component, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -16,6 +16,8 @@ export class PortChartComponent implements OnInit {
   @Input() portId!: number;
   onDate!: string;
   loading = signal('');
+
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   private _isVisible: boolean = false;
   @Input()
@@ -57,7 +59,21 @@ export class PortChartComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.onDate = '2025-10-17';
+    this.onDate = this.formatDate(new Date());
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  addDay(day: number): void {
+    const currentDate = new Date(this.onDate);
+    currentDate.setDate(currentDate.getDate() + day);
+    this.onDate = this.formatDate(currentDate);
+    this.loadHistory();
   }
 
   loadHistory() {
@@ -70,6 +86,7 @@ export class PortChartComponent implements OnInit {
       next: (data) => {
         this.lineChartData.labels = data.map(d => d.onTime ? new Date(d.onTime).toLocaleTimeString() : '—');
         this.lineChartData.datasets[0].data = data.map(d => typeof d.value === 'number' ? d.value : null);
+        this.chart?.update();
       },
       error: (err) => {
         console.error('Error loading device', err);
