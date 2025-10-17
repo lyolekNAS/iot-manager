@@ -6,7 +6,7 @@
             {{ port.value }}
           </span>
       <span *ngIf="port.ioType == 'in'">
-            <input type="text" [(ngModel)]="port.value" class="form-control d-inline-block w-auto text-center" (change)="updatePort(port)" />
+            <input type="text" [(ngModel)]="port.value" class="form-control d-inline-block w-25 text-center" (change)="updatePort(port)" />
             <i *ngIf="isLoading()" class="bi bi-broadcast-pin"></i>
           </span>
     </div>

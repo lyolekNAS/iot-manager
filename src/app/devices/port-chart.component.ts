@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, signal, ViewChild } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import 'chart.js/auto';
@@ -10,12 +10,13 @@ import { DeviceControllerService } from '@core/api/api/deviceController.service'
   selector: 'app-port-chart',
   standalone: true,
   templateUrl: './port-chart.component.html',
-  imports: [NgIf, BaseChartDirective]
+  imports: [NgIf, NgClass, BaseChartDirective]
 })
 export class PortChartComponent implements OnInit {
   @Input() portId!: number;
   onDate!: string;
-  loading = signal('');
+  isLoading = signal<boolean>(false);
+  infoMsg = signal<string>('');
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
@@ -49,8 +50,13 @@ export class PortChartComponent implements OnInit {
   public lineChartOptions: ChartConfiguration<'line'>['options'] = {
     responsive: true,
     scales: {
-      x: { title: { display: true, text: 'Time' } },
+      x: { display: false },
       y: { title: { display: true, text: 'Value' } }
+    },
+    plugins: {
+      legend: {
+        display: false
+      }
     }
   };
 
@@ -77,9 +83,10 @@ export class PortChartComponent implements OnInit {
   }
 
   loadHistory() {
+    this.isLoading.set(true);
     const numericId = Number(this.portId);
     if (isNaN(numericId)) {
-      this.loading.set(`Некоректний id: ${this.portId}`);
+      this.infoMsg.set(`Некоректний id: ${this.portId}`);
       return;
     }
     this.deviceService.getPortHistory(numericId, this.onDate).subscribe({
@@ -87,10 +94,13 @@ export class PortChartComponent implements OnInit {
         this.lineChartData.labels = data.map(d => d.onTime ? new Date(d.onTime).toLocaleTimeString() : '—');
         this.lineChartData.datasets[0].data = data.map(d => typeof d.value === 'number' ? d.value : null);
         this.chart?.update();
+        this.infoMsg.set(``);
+        this.isLoading.set(false);
       },
       error: (err) => {
         console.error('Error loading device', err);
-        this.loading.set(`Не вдалось завантажити: ${err.message} [${err.status}]`);
+        this.infoMsg.set(`Не вдалось завантажити: ${err.message} [${err.status}]`);
+        this.isLoading.set(false);
       }
     });
   }
