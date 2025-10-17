@@ -14,9 +14,23 @@ import { DeviceControllerService } from '@core/api/api/deviceController.service'
 })
 export class PortChartComponent implements OnInit {
   @Input() portId!: number;
-  @Input() isVisible?: boolean;
   onDate!: string;
   loading = signal('');
+
+  private _isVisible: boolean = false;
+  @Input()
+  set isVisible(value: boolean) {
+    this._isVisible = value;
+    if (this._isVisible) {
+      this.loadHistory();
+    }
+  }
+
+  get isVisible(): boolean {
+    return this._isVisible;
+  }
+
+
 
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
