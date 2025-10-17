@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, signal, computed } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -13,9 +13,9 @@ import { DeviceControllerService } from '@core/api/api/deviceController.service'
   imports: [NgIf, BaseChartDirective]
 })
 export class PortChartComponent implements OnInit {
-  @Input() portId!: string;
-
-
+  @Input() portId!: number;
+  @Input() isVisible?: boolean;
+  onDate!: string;
   loading = signal('');
 
   public lineChartData: ChartConfiguration<'line'>['data'] = {
@@ -43,7 +43,7 @@ export class PortChartComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.loadHistory();
+    this.onDate = '2025-10-17';
   }
 
   loadHistory() {
@@ -52,7 +52,7 @@ export class PortChartComponent implements OnInit {
       this.loading.set(`Некоректний id: ${this.portId}`);
       return;
     }
-    this.deviceService.getPortHistory(numericId, '2025-10-17').subscribe({
+    this.deviceService.getPortHistory(numericId, this.onDate).subscribe({
       next: (data) => {
         this.lineChartData.labels = data.map(d => d.onTime ? new Date(d.onTime).toLocaleTimeString() : '—');
         this.lineChartData.datasets[0].data = data.map(d => typeof d.value === 'number' ? d.value : null);

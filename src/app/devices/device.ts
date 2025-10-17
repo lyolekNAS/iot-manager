@@ -1,25 +1,24 @@
 //src/app/device.ts
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal} from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { DeviceControllerService } from '@core/api/api/deviceController.service';
-import { PortView } from '@core/api/model/portView';
-import { PortChartComponent } from '@devices/port-chart.component';
-
+import { LoadingStatusEvent } from '@core/model/loadingStatusEvent';
+import { PortComponent } from '@devices/port.component';
 
 
 @Component({
   selector: 'app-device',
   standalone: true,
   templateUrl: './device.html',
-  imports: [NgIf, NgFor, FormsModule, PortChartComponent]
+  imports: [NgIf, NgFor, PortComponent]
 })
 export class DeviceComponent implements OnInit {
   device = signal<any | null>([]);
-  id = signal<string>("");
+  id = signal<string>('');
 
-  loading = signal('');
+
+  loading = signal<LoadingStatusEvent>({ msg: '', type: '' });
 
   constructor(
     private deviceService: DeviceControllerService,
@@ -30,7 +29,7 @@ export class DeviceComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (!id) {
-        this.loading.set('Невизначений id');
+        this.loading.set({msg: 'Невизначений id', type: 'err'});
         return;
       }
 
@@ -40,11 +39,11 @@ export class DeviceComponent implements OnInit {
   }
 
   private loadDevice(id: string) {
-    this.loading.set('Завантаження');
+    this.loading.set({msg: 'Завантаження', type: 'load'});
 
     const numericId = Number(id);
     if (isNaN(numericId)) {
-      this.loading.set(`Некоректний id: ${id}`);
+      this.loading.set({msg: `Некоректний id: ' + ${id}`, type: 'err'});
       return;
     }
 
@@ -52,31 +51,16 @@ export class DeviceComponent implements OnInit {
       next: (data) => {
         console.log('Loaded device:', data);
         this.device.set(data);
-        this.loading.set('');
+        this.loading.set({msg: '', type: ''});
       },
       error: (err) => {
         console.error('Error loading device', err);
-        this.loading.set(`Не вдалось завантажити: ${err.message} [${err.status}]`);
+        this.loading.set({msg: `Не вдалось завантажити: ${err.message} [${err.status}]`, type: 'err'});
       }
     });
   }
 
   refreshDevice(){
     this.loadDevice(this.id());
-  }
-
-  updatePort(port: PortView) {
-    this.loading.set('Завантаження');
-
-    this.deviceService.updatePort(port.id!, port.value!).subscribe({
-      next: () => {
-        console.log(`${port.name} змінено`);
-        this.loading.set(``);
-      },
-      error: (err) => {
-        console.error(`❌ Не вдалось змінити ${port.name}:`, err);
-        this.loading.set(`Не вдалось оновити: ${err.message} [${err.status}]`);
-      },
-    });
   }
 }

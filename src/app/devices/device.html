@@ -1,8 +1,9 @@
 <ng-template #msg>
-  <div class="alert alert-info" role="alert">{{ loading() }}</div>
+  <div class="alert alert-info" role="alert">{{ loading().msg }}</div>
 </ng-template>
 
-<div *ngIf="loading() == ''; else msg">
+
+<div *ngIf="loading().msg == ''; else msg">
   <div class="list-group">
     <h5 class="list-group-item list-group-item-dark mb-0 mt-3 rounded-top d-flex justify-content-between align-items-center">
 
@@ -16,17 +17,6 @@
     </h5>
     <div class="list-group-item text-center">Востаннє онлайн: {{device().lastUpdated}}</div>
 
-    <div *ngFor="let port of device().devicePorts" class="list-group-item text-center">
-      <div>
-        {{ port.name }}:
-        <span *ngIf="port.ioType == 'out'">
-          {{ port.value }}
-        </span>
-        <span *ngIf="port.ioType == 'in'">
-          <input type="text" [(ngModel)]="port.value" class="form-control d-inline-block w-auto text-center" (change)="updatePort(port)" />
-        </span>
-      </div>
-      <app-port-chart [portId]="port.id"></app-port-chart>
-    </div>
+    <app-port *ngFor="let port of device().devicePorts" [port]="port"></app-port>
   </div>
 </div>
