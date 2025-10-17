@@ -52,7 +52,7 @@ export class PortChartComponent implements OnInit {
       this.loading.set(`Некоректний id: ${this.portId}`);
       return;
     }
-    this.deviceService.getPortHistory(numericId, '2025-10-16').subscribe({
+    this.deviceService.getPortHistory(numericId, '2025-10-17').subscribe({
       next: (data) => {
         this.lineChartData.labels = data.map(d => d.onTime ? new Date(d.onTime).toLocaleTimeString() : '—');
         this.lineChartData.datasets[0].data = data.map(d => typeof d.value === 'number' ? d.value : null);
