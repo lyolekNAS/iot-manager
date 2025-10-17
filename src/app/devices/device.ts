@@ -5,13 +5,13 @@ import { ActivatedRoute } from '@angular/router';
 import { DeviceControllerService } from '@core/api/api/deviceController.service';
 import { LoadingStatusEvent } from '@core/model/loadingStatusEvent';
 import { PortComponent } from '@devices/port.component';
-
+import { TimeSincePipe } from '@shared/pipes/time-since.pipe';
 
 @Component({
   selector: 'app-device',
   standalone: true,
   templateUrl: './device.html',
-  imports: [NgIf, NgFor, PortComponent]
+  imports: [NgIf, NgFor, PortComponent, TimeSincePipe]
 })
 export class DeviceComponent implements OnInit {
   device = signal<any | null>([]);

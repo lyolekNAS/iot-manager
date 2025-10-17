@@ -10,7 +10,8 @@
       "@app/*": ["app/*"],
       "@core/*": ["app/core/*"],
       "@devices/*": ["app/devices/*"],
-      "@user-info/*": ["app/user-info/*"]
+      "@user-info/*": ["app/user-info/*"],
+      "@shared/*": ["app/shared/*"]
     }
   },
   "include": [
