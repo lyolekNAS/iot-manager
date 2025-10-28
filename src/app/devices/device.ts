@@ -1,7 +1,7 @@
 //src/app/device.ts
 import { Component, OnInit, signal} from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceControllerService } from '@core/api/api/deviceController.service';
 import { LoadingStatusEvent } from '@core/model/loadingStatusEvent';
 import { PortComponent } from '@devices/port.component';
@@ -22,7 +22,8 @@ export class DeviceComponent implements OnInit {
 
   constructor(
     private deviceService: DeviceControllerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -62,5 +63,10 @@ export class DeviceComponent implements OnInit {
 
   refreshDevice(){
     this.loadDevice(this.id());
+  }
+
+
+  goToDevList() {
+    this.router.navigate(['/devices']);
   }
 }
