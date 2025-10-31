@@ -27,6 +27,7 @@ export class PortComponent {
   ) {}
 
   updatePort(port: PortView) {
+    port.value ??= 0;
     this.updateStatuses(`Завантаження`, 'load');
 
 
